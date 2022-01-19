@@ -1,4 +1,4 @@
-# TEDS
+# TEES
 Disciplina de Tópicos Especiais em Desenvolvimento de Software
 
 Professor: Paulo Roma
