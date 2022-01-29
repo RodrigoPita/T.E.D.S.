@@ -134,34 +134,13 @@
                         ctx.stroke()
                     }
                 
-                    //setCookie("slider", String(n.value), 365);
+                    setCookie("slider", String(slider.value), 365);
                     return squareSide;
 
                 }   
                 dragAndSave(".container");
-                //n.value = getCookie("slider");
+                slider.value = getCookie("slider");
                 quadrados();
-                /*
-                var canvas;
-                var canvasContext;
-                var slider = document.getElementById('n');
-                var output = document.getElementById("val");
-                output.innerHTML = slider.value;
-                window.onload = function() {
-                    canvas = document.getElementById('quadro');
-                    canvasContext = canvas.getContext('2d');
-
-                    slider.oninput = function() {
-                        output.innerHTML = this.value;
-                    }
-
-                    var ncircles = slider.value;
-                    const w = canvas.width;
-                    const h = canvas.height;
-                    const n = ncircles;
-
-                }
-                */
             </script>
         </div>
     </body>

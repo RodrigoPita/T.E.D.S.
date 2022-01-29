@@ -121,6 +121,11 @@
             <script src="cookies.js"></script>
             <script src="factorize.js"></script>
             <script type="module">
+                import {
+                    factor,
+                    leastFactor,
+                    condense,
+                } from "factorize.js";
                 import { LCM } from "gcd.js";
                 window.getFactors = getFactors;
 
@@ -141,7 +146,8 @@
                         let rawF = factorize(factors);
                         let f = condense(rawF);
 
-                        $("#prod").html(`${factors} = ${f}`);
+                        $("#prod").html(`${factors}`);
+                        $("textArea#factors").html(`${condense(factor(lcmValue))}`)
                         
                         $("#i1").html((n.valueAsNumber + 1).toString());
                         $("#i").html(n.valueAsNumber.toString());
