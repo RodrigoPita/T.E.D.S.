@@ -2,41 +2,165 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Quadrados e Bolas</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.min.css"
+        />
+        <style type="text/css">
+            .container {
+                width: 100%;
+                text-align: center;
+            }
+            .slidercontainer {
+                width: 100%;
+                text-align: center;
+            }
+
+            .slider {
+                width: 50%;
+                height: 25px;
+            }
+
+
+        </style>
     </head>
     <body>
-        <div>
-        <canvas 
-        id = "quadro" 
-        width = "300"
-        height="300"
-        style="border:1px solid gray">
-        </canvas>
-        </div>
+        <div class="container">
+            <canvas 
+            id = "quadro" 
+            width = "300"
+            height="300"
+            style="border:1px solid gray">
+            </canvas>
 
-        <div>
-        <p><span id="val"></span></p>
-        <input id ="n" type=range min=1 max=100 step=1>
-        </div>
-        <script>
-            var canvas;
-            var canvasContext;
-            var slider = document.getElementById('n');
-            var output = document.getElementById("val");
-            output.innerHTML = slider.value;
-            window.onload = function() {
-                canvas = document.getElementById('quadro');
-                canvasContext = canvas.getContext('2d');
+            <div class="slidercontainer">
+            <p text-align="center"><span id="val">1</span></p>
+            <input 
+                id ="sldr" 
+                type=range 
+                min=1 
+                max=100 
+                class="slider"
+                step=1
+                oninput="quadrados()">
+            </div>
 
+            <script src="LCG.js"></script>
+            <script src="cookies.js"></script>
+            <script>
+                let canvas = document.getElementById('quadro');
+                let ctx = canvas.getContext("2d");
+                
+                let slider = document.getElementById('sldr');
+                let output = document.getElementById("val");
+                output.innerHTML = slider.value;
                 slider.oninput = function() {
-                    output.innerHTML = this.value;
+                        output.innerHTML = this.value;
+                    }
+
+                window.quadrados = quadrados;
+
+
+                function quadrados() {
+
+                    const w = canvas.width;
+                    const h = canvas.height;
+                    const n = $("#n")[0];
+
+                    const ratio = w/h;
+                    const cols = Math.sqrt(n * ratio);
+                    const rows = Math.sqrt(n / cols);
+
+                    // Melhor opção ocupando toda altura
+                    {
+                        let _rows = Math.ceil(rows);
+                        let _cols = Math.ceil(n / _rows);
+
+                        if(_rows * ratio < _cols){
+                        const rowsRatio = _cols  / (_rows * ratio);
+                        _rows = Math.ceil(_rows * rowsRatio);
+                        _cols = Math.ceil(n / _rows);
+                        }
+
+                        var fullHeightSide = h / _rows;
+                    }
+
+                    // Melhor opção ocupando toda largura
+                    {
+                        let _cols = Math.ceil(cols);
+                        let _rows = Math.ceil(n / _cols);
+
+                        if(_rows * ratio > _cols){
+                        const colsRatio = (_rows * ratio) / _cols;
+                        _cols = Math.ceil(_cols * colsRatio);
+                        _rows = Math.ceil(n / _cols);
+                        }
+
+                        var fullWidthSide = w / _cols;
+                    }
+
+                    // Finalmente 
+                    let squareSide = Math.max(fullHeightSide, fullWidthSide);
+                    
+                    // My solution is identical to the code below...
+                    let perRow = Math.floor(canvas.width / squareSide)
+                    let circleRadius = squareSide / 4;
+                    ctx.clearRect(0,0,canvas.width,canvas.height);
+                    ctx.fillStyle = "black";
+                    ctx.strokeStyle = "gray";
+                    for (let i = 0; i < n; i++) {
+                        let row = Math.floor(i/perRow);
+                        let col = i % perRow;
+                        let x = circleRadius * 2 + circleRadius*4*col; 
+                        let y = circleRadius * 2 + circleRadius*4*row; 
+                        ctx.beginPath ();
+                        ctx.arc (x,y,circleRadius,0,Math.PI*2)
+                        ctx.fill()
+                        ctx.beginPath ();
+                        ctx.moveTo(x-squareSide/2,y-squareSide/2);
+                        ctx.lineTo(x-squareSide/2,y+squareSide/2);
+                        ctx.lineTo(x+squareSide/2,y+squareSide/2);
+                        ctx.lineTo(x+squareSide/2,y-squareSide/2);
+                        ctx.closePath();
+                        ctx.stroke()
+                    }
+                
+                    setCookie("slider", String(n.value), 365);
+                    return squareSide;
+
+                }   
+                dragAndSave(".container");
+                $("#n")[0].value = getCookie("slider");
+                quadrados() 
+                /*
+                var canvas;
+                var canvasContext;
+                var slider = document.getElementById('n');
+                var output = document.getElementById("val");
+                output.innerHTML = slider.value;
+                window.onload = function() {
+                    canvas = document.getElementById('quadro');
+                    canvasContext = canvas.getContext('2d');
+
+                    slider.oninput = function() {
+                        output.innerHTML = this.value;
+                    }
+
+                    var ncircles = slider.value;
+                    const w = canvas.width;
+                    const h = canvas.height;
+                    const n = ncircles;
+
                 }
-
-                var ncircles = slider.value;
-                const w = canvas.width;
-                const h = canvas.height;
-                const n = ncircles;
-
-            }
-        </script>
+                */
+            </script>
+        </div>
     </body>
 </html>
