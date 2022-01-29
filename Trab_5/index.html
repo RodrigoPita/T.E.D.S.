@@ -54,25 +54,27 @@
 
             <script src="LCG.js"></script>
             <script src="cookies.js"></script>
-            <script>
+            <script type="module">
                 let canvas = document.getElementById('quadro');
                 let ctx = canvas.getContext("2d");
                 
                 let slider = document.getElementById('sldr');
                 let output = document.getElementById("val");
                 output.innerHTML = slider.value;
-                slider.oninput = function() {
-                        output.innerHTML = this.value;
-                    }
-
+                /*slider.oninput = function() {
+                        
+                    }*/
+                
                 window.quadrados = quadrados;
-
+                
 
                 function quadrados() {
-
+                    console.log(slider.value)
+                    output.innerHTML = slider.value;
+                    let ncircles = slider.value;
                     const w = canvas.width;
                     const h = canvas.height;
-                    const n = $("#n")[0];
+                    const n = ncircles;
 
                     const ratio = w/h;
                     const cols = Math.sqrt(n * ratio);
@@ -132,13 +134,13 @@
                         ctx.stroke()
                     }
                 
-                    setCookie("slider", String(n.value), 365);
+                    //setCookie("slider", String(n.value), 365);
                     return squareSide;
 
                 }   
                 dragAndSave(".container");
-                $("#n")[0].value = getCookie("slider");
-                quadrados() 
+                //n.value = getCookie("slider");
+                quadrados();
                 /*
                 var canvas;
                 var canvasContext;
