@@ -28,15 +28,12 @@
                 height: 25px;
             }
 
-
         </style>
     </head>
     <body>
         <div class="container">
             <canvas 
             id = "quadro" 
-            width = "300"
-            height="300"
             style="border:1px solid gray">
             </canvas>
 
@@ -61,12 +58,19 @@
                 let slider = document.getElementById('sldr');
                 let output = document.getElementById("val");
                 output.innerHTML = slider.value;
-                /*slider.oninput = function() {
-                        
-                    }*/
-                
+
                 window.quadrados = quadrados;
                 
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                var canvasHeight = urlParams.get("height");
+                var canvasWidth = urlParams.get("width");
+                if (canvasHeight == null) {
+                    canvasHeight = 300;
+                    canvasWidth = 300;
+                }
+                canvas.height = canvasHeight;
+                canvas.width = canvasWidth;
 
                 function quadrados() {
                     console.log(slider.value)
