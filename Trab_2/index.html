@@ -48,6 +48,9 @@
                 );
             }
 
+            // array to store all nodes
+            let invNodes = [];
+
             /**
              * Creates some nodes using the DOM API.
              *
@@ -143,6 +146,8 @@
 
                 // check that the new id has been created
                 console.assert(document.getElementById(paraid) === para);
+                invNodes.push(paraid);
+                
 
                 // Delete a text node
                 document.getElementById(paraid).onclick = function() {
@@ -152,7 +157,9 @@
                 // make a text node visible again.
                 window.onkeydown = function (event) {
                     if (event.ctrlKey && event.key === "v") {
-                        document.getElementById(paraid).style.display = "block";
+                        for (i = 0; i < invNodes.length; i++) {
+                            document.getElementById(invNodes[i]).style.display = "block";
+                        }
                     }
                 };
             }
