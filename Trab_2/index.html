@@ -148,6 +148,13 @@
                 document.getElementById(paraid).onclick = function() {
                     document.getElementById(paraid).style.display = "none";
                 }
+
+                // make a text node visible again.
+                window.onkeydown = function (event) {
+                    if (event.ctrlKey && event.key === "v") {
+                        document.getElementById(paraid).style.display = "block";
+                    }
+                };
             }
 
             document.writeln(
