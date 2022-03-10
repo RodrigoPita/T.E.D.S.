@@ -127,6 +127,10 @@
                     condense,
                 } from "factorize.js";
                 import { LCM } from "gcd.js";
+
+                let slider = document.getElementById('n');
+                let output = document.getElementById('range');
+                output.innerHTML = slider.value;
                 window.getFactors = getFactors;
 
                 function getFactors() {
