@@ -6,7 +6,7 @@ function factor(n) {
     if (n<0) return '-'+factor(-n);
     var minFactor = leastFactor(n);
     if (n==minFactor) return ''+n;
-    return minFactor+'*'+factor(n/minFactor);
+    return condense(minFactor+'*'+factor(n/minFactor);)
    }
    
    // find the least factor in n by trial division

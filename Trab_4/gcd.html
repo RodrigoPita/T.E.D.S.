@@ -129,7 +129,7 @@
                 import { LCM } from "gcd.js";
 
                 let slider = document.getElementById('n');
-                let output = document.getElementById('range');
+                let output = document.getElementById('i1');
                 output.innerHTML = slider.value;
                 window.getFactors = getFactors;
 
@@ -148,11 +148,10 @@
                             i.style.color = mcolor;
                         }
 
-                        let rawF = factorize(factors);
-                        let f = condense(rawF);
+                        let f = factor(factors);
 
                         $("#prod").html(`${factors}`);
-                        $("textArea#factors").html(`${condense(factor(lcmValue))}`)
+                        $("textArea#factors").html(`${factor(lcmValue)}`);
                         
                         $("#i1").html((n.valueAsNumber + 1).toString());
                         $("#i").html(n.valueAsNumber.toString());
