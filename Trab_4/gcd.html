@@ -134,6 +134,7 @@
                 window.getFactors = getFactors;
 
                 function getFactors() {
+                    output.innerHTML = slider.value;
                     let n = $("#n")[0];
                     let m = $("mark");
                     if (n) {
